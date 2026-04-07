@@ -1,0 +1,17 @@
+﻿.env
+
+# Local data and generated outputs
+data/
+beforeWork/
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# OS/editor clutter
+.DS_Store
+Thumbs.db

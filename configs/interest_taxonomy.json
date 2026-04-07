@@ -1,0 +1,54 @@
+﻿{
+  "categories": [
+    {
+      "label": "architecture_overview",
+      "label_zh": "建筑整体",
+      "description": "主体是楼阁、殿堂、亭台、院落或建筑群的整体外观。"
+    },
+    {
+      "label": "garden_plants",
+      "label_zh": "园林植物",
+      "description": "主体是树木、花草、竹林、盆景或园林植物景观。"
+    },
+    {
+      "label": "plaque_inscription",
+      "label_zh": "牌匾题字",
+      "description": "主体是匾额、碑刻、楹联、题字、说明牌或其他文字内容。"
+    },
+    {
+      "label": "people_checkin",
+      "label_zh": "人物打卡",
+      "description": "主体是游客、人像摆拍、合影或以人物为主的打卡场景。"
+    },
+    {
+      "label": "interior_exhibition",
+      "label_zh": "室内陈列",
+      "description": "主体是室内展厅、藏书楼内部、展柜、文物陈列或馆藏展示。"
+    },
+    {
+      "label": "architectural_detail",
+      "label_zh": "建筑细部",
+      "description": "主体是门窗、屋檐、斗拱、栏杆、砖雕、木雕、石雕等局部细节。"
+    },
+    {
+      "label": "courtyard_garden",
+      "label_zh": "庭院园景",
+      "description": "主体是庭院、水池、假山、回廊、路径等园林空间场景。"
+    },
+    {
+      "label": "artifact_object",
+      "label_zh": "器物文物",
+      "description": "主体是雕像、石刻、摆件、文物器物或独立展示对象。"
+    },
+    {
+      "label": "map_ticket_guide",
+      "label_zh": "导览票务",
+      "description": "主体是地图、票据、导览册、景区说明页或攻略信息图。"
+    },
+    {
+      "label": "night_view_lighting",
+      "label_zh": "夜景灯光",
+      "description": "主体是夜间拍摄的建筑、园林或灯光氛围场景。"
+    }
+  ]
+}
