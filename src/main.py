@@ -4,8 +4,10 @@ import argparse
 import os
 from pathlib import Path
 
+from src.analysis.analyze_text_sentiment import analyze_and_save_sentiment
 from src.analysis.build_image_manifest import build_and_save_records
 from src.analysis.classify_with_vlm import DEFAULT_BASE_URL, DEFAULT_MODEL, run_classification
+from src.analysis.generate_management_recommendations import generate_management_recommendations
 from src.importers.xhs_html_importer import import_html_notes
 from src.paths import CONFIGS_DIR, HTML_PAGES_DIR
 
@@ -43,6 +45,8 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("--download-images", action="store_true", default=True, help="Download allowlisted image URLs during import.")
     parser.add_argument("--no-download-images", action="store_false", dest="download_images", help="Skip image downloads during import.")
     parser.add_argument("--pause-seconds", type=float, default=1.0, help="Pause between downloads and model calls.")
+    parser.add_argument("--skip-text-sentiment", action="store_true", help="Skip NLP-based sentiment analysis on note text.")
+    parser.add_argument("--skip-management-recommendations", action="store_true", help="Skip generating management recommendations.")
     parser.add_argument(
         "--skip-vlm",
         action="store_true",
@@ -68,11 +72,30 @@ def main() -> None:
     )
     print(f"imported {len(imported)} notes")
 
+    if args.skip_text_sentiment:
+        print("skipped text sentiment analysis because --skip-text-sentiment was set")
+    else:
+        sentiment_summary = analyze_and_save_sentiment()
+        print(
+            "saved text sentiment reports "
+            f"for {sentiment_summary['total_notes']} notes with distribution "
+            f"{sentiment_summary['sentiment_distribution']}"
+        )
+
     records = build_and_save_records()
     print(f"prepared {len(records)} image records")
 
     if args.skip_vlm:
         print("skipped VLM classification because --skip-vlm was set")
+        if args.skip_management_recommendations:
+            print("skipped management recommendations because --skip-management-recommendations was set")
+        else:
+            recommendation_payload = generate_management_recommendations()
+            print(
+                "saved management recommendations with route items "
+                f"{len(recommendation_payload['route_recommendations'])} and cultural items "
+                f"{len(recommendation_payload['culture_recommendations'])}"
+            )
         return
     if not records:
         print("skipped VLM classification because no image records were available")
@@ -96,6 +119,16 @@ def main() -> None:
         timeout=args.timeout,
     )
     print(f"saved {len(predictions)} VLM predictions")
+
+    if args.skip_management_recommendations:
+        print("skipped management recommendations because --skip-management-recommendations was set")
+    else:
+        recommendation_payload = generate_management_recommendations()
+        print(
+            "saved management recommendations with route items "
+            f"{len(recommendation_payload['route_recommendations'])} and cultural items "
+            f"{len(recommendation_payload['culture_recommendations'])}"
+        )
 
 
 if __name__ == "__main__":

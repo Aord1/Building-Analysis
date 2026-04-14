@@ -1,0 +1,127 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>大模型游客分析平台</title>
+  <link rel="stylesheet" href="./styles.css?v=2" />
+</head>
+<body>
+  <main class="layout">
+    <aside class="sidebar">
+      <h1>大模型分析平台</h1>
+      <p class="sidebar-sub">建筑游览数字化助手</p>
+      <nav class="nav">
+        <button id="navUpload" class="nav-item active">上传分析与大模型回答</button>
+        <button id="navOverview" class="nav-item">全量数据与管理建议</button>
+      </nav>
+      <div class="sidebar-actions">
+        <button id="reloadBtn" class="btn">刷新数据</button>
+        <button id="runPipelineBtn" class="btn btn-accent">全量一键运行</button>
+        <p id="statusText" class="status">等待加载</p>
+      </div>
+    </aside>
+
+    <section class="content">
+      <section id="pageUpload" class="page page-upload active">
+        <header class="page-head">
+          <h2>上传 HTML 并查看大模型回答</h2>
+          <p>上传后自动完成导入、情感分析、图像识别（VLM）与建议生成。</p>
+        </header>
+
+        <article class="card upload-card">
+          <div class="upload-methods">
+            <div class="upload-method single-upload">
+              <div class="upload-icon">📄</div>
+              <h4>单文件/多文件上传</h4>
+              <p>选择一个或多个 HTML 文件</p>
+              <input id="htmlFilesInput" type="file" accept=".html,.htm" multiple />
+            </div>
+            <div class="upload-divider">或</div>
+            <div class="upload-method batch-upload">
+              <div class="upload-icon">📁</div>
+              <h4>批量文件夹上传</h4>
+              <p>选择包含多个 HTML 文件的文件夹</p>
+              <input id="htmlDirInput" type="file" accept=".html,.htm" webkitdirectory directory multiple />
+            </div>
+          </div>
+          <div class="upload-actions">
+            <button id="uploadBtn" class="btn btn-accent btn-large">🚀 上传并自动分析</button>
+            <span id="uploadLoading" class="upload-loading hidden">
+              <span class="spinner" aria-hidden="true"></span>
+              <span id="uploadLoadingText">分析中... 已等待 0s</span>
+            </span>
+            <button id="clearHtmlBtn" class="btn btn-secondary">🗑️ 清空已记录HTML</button>
+            <button id="clearDataBtn" class="btn btn-secondary">🗑️ 清空全部data</button>
+          </div>
+          <p id="selectedHtmlInfo" class="selected-info">当前已选 HTML：<strong>0</strong> 个文件</p>
+          <p class="upload-hint">💡 上传后将先展示对话式大模型回答，再在下方展示本次上传建议</p>
+        </article>
+
+        <article class="card chat-card">
+          <h3>本次上传的大模型回答（对话）</h3>
+          <div id="uploadVlmAnswers" class="chat-list"></div>
+        </article>
+
+        <article class="card suggestion-card">
+          <h3>本次上传建议</h3>
+          <h4>图像兴趣（本次上传）</h4>
+          <ul id="singleInterestList" class="list suggestion-list"></ul>
+          <h4>情感分布（本次上传）</h4>
+          <ul id="singleSentimentList" class="list suggestion-list"></ul>
+        </article>
+      </section>
+
+      <section id="pageOverview" class="page">
+        <header class="page-head">
+          <h2>全量数据与建议</h2>
+          <p>展示当前收集的全部样本、全局情感与图像兴趣分布、管理建议。</p>
+        </header>
+
+        <section class="grid metrics">
+          <article class="card">
+            <h3>文本样本量</h3>
+            <p id="totalNotes" class="metric">-</p>
+          </article>
+          <article class="card">
+            <h3>平均情感分</h3>
+            <p id="avgSentiment" class="metric">-</p>
+          </article>
+          <article class="card">
+            <h3>VLM预测量</h3>
+            <p id="vlmCount" class="metric">-</p>
+          </article>
+          <article class="card">
+            <h3>建议条目数</h3>
+            <p id="recommendCount" class="metric">-</p>
+          </article>
+        </section>
+
+        <section class="grid two-cols">
+          <article class="card">
+            <h3>情感分布（全局）</h3>
+            <div id="sentimentPie" class="pie-wrap"></div>
+          </article>
+          <article class="card">
+            <h3>图像兴趣 Top 标签（全局）</h3>
+            <div id="interestBars" class="bars"></div>
+          </article>
+        </section>
+
+        <section class="grid two-cols">
+          <article class="card">
+            <h3>路线优化建议（全局）</h3>
+            <ul id="routeList" class="list"></ul>
+          </article>
+          <article class="card">
+            <h3>文化展示建议（全局）</h3>
+            <ul id="cultureList" class="list"></ul>
+          </article>
+        </section>
+
+      </section>
+    </section>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
