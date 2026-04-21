@@ -15,3 +15,21 @@ venv/
 # OS/editor clutter
 .DS_Store
 Thumbs.db
+
+# 模型文件
+*.pkl
+*.pth
+*.pt
+models/
+
+# 日志
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# 前端
+node_modules/
+dist/
